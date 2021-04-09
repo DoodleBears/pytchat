@@ -33,6 +33,7 @@ from .api import (
     CompatibleProcessor,
     DummyProcessor,
     DefaultProcessor,
+    SuperChatLogProcessor,
     HTMLArchiver,
     TSVArchiver,
     JsonfileArchiver,

@@ -22,7 +22,7 @@ class SuperchatCalculator(ChatProcessor):
     """
 
     def __init__(self):
-        self.results = {}
+        self.results = {"amount_sc":0}
 
     def process(self, chat_components: list):
         """
@@ -46,13 +46,14 @@ class SuperchatCalculator(ChatProcessor):
                 symbol, amount = self._parse(renderer)
                 self.results.setdefault(symbol, 0)
                 self.results[symbol] += amount
+                self.results["amount_sc"] += 1
         return self.results
 
     def _parse(self, renderer):
         purchase_amount_text = renderer["purchaseAmountText"]["simpleText"]
         m = superchat_regex.search(purchase_amount_text)
         if m:
-            symbol = m.group(1)
+            symbol = m.group(1).replace("\xa0","")
             amount = float(m.group(2).replace(',', ''))
         else:
             symbol = ""

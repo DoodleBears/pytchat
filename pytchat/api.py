@@ -5,6 +5,7 @@ from .core_async.livechat import LiveChatAsync
 from .processors.chat_processor import ChatProcessor
 from .processors.compatible.processor import CompatibleProcessor
 from .processors.default.processor import DefaultProcessor
+from .processors.superchatlog.processor import SuperChatLogProcessor
 from .processors.dummy_processor import DummyProcessor
 from .processors.html_archiver import HTMLArchiver
 from .processors.tsv_archiver import TSVArchiver
@@ -22,6 +23,7 @@ __all__ = [
     CompatibleProcessor,
     DummyProcessor,
     DefaultProcessor,
+    SuperChatLogProcessor,
     HTMLArchiver,
     TSVArchiver,
     JsonfileArchiver,
