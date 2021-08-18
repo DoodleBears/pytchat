@@ -173,6 +173,7 @@ class LiveChatAsync:
                 while(continuation and self._is_alive):
                     continuation = await self._check_pause(continuation)
                     contents = await self._get_contents(continuation, client, headers)
+                    time_mark = time.time()
                     metadata, chatdata = self._parser.parse(contents)
                     continuation = metadata.get('continuation')
                     if continuation:
@@ -183,7 +184,6 @@ class LiveChatAsync:
                         "timeout": timeout,
                         "chatdata": chatdata
                     }
-                    time_mark = time.time()
                     if self._direct_mode:
                         processed_chat = self.processor.process(
                             [chat_component])
