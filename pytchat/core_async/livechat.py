@@ -175,12 +175,8 @@ class LiveChatAsync:
             async with self._client as client:
                 while(continuation and self._is_alive):
                     continuation = await self._check_pause(continuation)
-<<<<<<< HEAD
-                    contents = await self._get_contents(continuation, client, headers)
-                    time_mark = time.time()
-=======
                     contents = await self._get_contents(continuation, client, headers) #Q#
->>>>>>> 168d9b54cc69d4b15a1d7097a276ce4c5f7d75f0
+                    time_mark = time.time()
                     metadata, chatdata = self._parser.parse(contents)
                     continuation = metadata.get('continuation')
                     if continuation:
