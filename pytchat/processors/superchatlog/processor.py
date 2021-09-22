@@ -26,7 +26,6 @@ class SuperChatLogProcessor(DefaultProcessor):
             "liveChatPaidStickerRenderer": LiveChatPaidStickerRenderer(),
             "liveChatLegacyPaidMessageRenderer": LiveChatLegacyPaidMessageRenderer(),
             "liveChatMembershipItemRenderer": LiveChatMembershipItemRenderer(),
-            "liveChatDonationAnnouncementRenderer": None,
             "liveChatPlaceholderItemRenderer": LiveChatPlaceholderItemRenderer()
         }
         
@@ -34,12 +33,6 @@ class SuperChatLogProcessor(DefaultProcessor):
         try:
             key = list(item.keys())[0]
             renderer = self.renderers.get(key)
-            if key not in self.renderers.keys():
-                print("New key detected:",key,item)
-            if key == "liveChatDonationAnnouncementRenderer":
-                print("DonationKey",item)
-            if renderer is None:
-                return None
             renderer.setitem(item.get(key), Chat())
             renderer.settype()
             renderer.get_snippet()
