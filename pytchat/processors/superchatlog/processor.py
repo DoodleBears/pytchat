@@ -33,6 +33,8 @@ class SuperChatLogProcessor(DefaultProcessor):
         try:
             key = list(item.keys())[0]
             renderer = self.renderers.get(key)
+            if renderer is None:
+                return None
             renderer.setitem(item.get(key), Chat())
             renderer.settype()
             renderer.get_snippet()
