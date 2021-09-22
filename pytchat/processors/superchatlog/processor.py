@@ -22,7 +22,6 @@ class SuperChatLogProcessor(DefaultProcessor):
         self.first = True
         self.abs_diff = 0
         self.renderers = {
-            "liveChatTextMessageRenderer": None,
             "liveChatPaidMessageRenderer": LiveChatPaidMessageRenderer(),
             "liveChatPaidStickerRenderer": LiveChatPaidStickerRenderer(),
             "liveChatLegacyPaidMessageRenderer": LiveChatLegacyPaidMessageRenderer(),
