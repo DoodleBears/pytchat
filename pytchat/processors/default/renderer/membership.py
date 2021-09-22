@@ -28,6 +28,8 @@ class LiveChatMembershipItemRenderer(BaseRenderer):
     
     def get_snippet(self):
         super().get_snippet()
+        self.chat.member_level = "None"
+        member_stage_msgs = self.item.get("headerSubtext", {}).get("simpleText", None)
         if "message" in self.item.keys() and "headerPrimaryText" in self.item.keys():
             runs = self.item.get("headerPrimaryText", {}).get("runs", [])
             if len(runs) == 3:
@@ -39,3 +41,9 @@ class LiveChatMembershipItemRenderer(BaseRenderer):
                     self.chat.currency = "MON"
                 if time in ["days","day"]:
                     self.chat.currency = "DAYS"
+            if member_stage_msgs:
+                self.chat.member_level = member_stage_msgs
+        else:
+            member_stage_msgs = self.item.get("headerSubtext", {}).get("runs", [])
+            if len(member_stage_msgs) > 1:
+                self.chat.member_level = member_stage_msgs[1].get("text")
