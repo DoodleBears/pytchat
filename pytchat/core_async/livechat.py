@@ -91,6 +91,7 @@ class LiveChatAsync:
                  ):
         self._client:httpx.AsyncClient = client
         self._video_id = util.extract_video_id(video_id)
+        self.member_stream = util.is_member_stream(self._client, self._video_id)
         self.seektime = seektime
         if isinstance(processor, tuple):
             self.processor = Combinator(processor)
@@ -203,7 +204,7 @@ class LiveChatAsync:
             self._logger.debug(f"[{self._video_id}]{str(e)}")
             raise
         except Exception:
-            self._logger.error(f"{traceback.format_exc(limit=-1)}")
+            self._logger.error(f"{traceback.format_exc(limit=None)}")
             raise
 
         self._logger.debug(f"[{self._video_id}] finished fetching chat.")
