@@ -173,33 +173,32 @@ class LiveChatAsync:
             parameter for next chat data
         '''
         try:
-            async with self._client as client:
-                while(continuation and self._is_alive):
-                    continuation = await self._check_pause(continuation)
-                    contents = await self._get_contents(continuation, client, headers) #Q#
-                    time_mark = time.time()
-                    metadata, chatdata = self._parser.parse(contents)
-                    continuation = metadata.get('continuation')
-                    if continuation:
-                        self.continuation = continuation
-                    timeout = metadata['timeoutMs'] / 1000
-                    chat_component = {
-                        "video_id": self._video_id,
-                        "timeout": timeout,
-                        "chatdata": chatdata
-                    }
-                    if self._direct_mode:
-                        processed_chat = self.processor.process(
-                            [chat_component])
-                        if isinstance(processed_chat, tuple):
-                            await self._callback(*processed_chat)
-                        else:
-                            await self._callback(processed_chat)
+            while(continuation and self._is_alive):
+                continuation = await self._check_pause(continuation)
+                contents = await self._get_contents(continuation, self._client, headers) #Q#
+                time_mark = time.time()
+                metadata, chatdata = self._parser.parse(contents)
+                continuation = metadata.get('continuation')
+                if continuation:
+                    self.continuation = continuation
+                timeout = metadata['timeoutMs'] / 1000
+                chat_component = {
+                    "video_id": self._video_id,
+                    "timeout": timeout,
+                    "chatdata": chatdata
+                }
+                if self._direct_mode:
+                    processed_chat = self.processor.process(
+                        [chat_component])
+                    if isinstance(processed_chat, tuple):
+                        await self._callback(*processed_chat)
                     else:
-                        await self._buffer.put(chat_component)
-                    diff_time = timeout - (time.time() - time_mark)
-                    await asyncio.sleep(diff_time)
-                    self._last_offset_ms = metadata.get('last_offset_ms', 0)
+                        await self._callback(processed_chat)
+                else:
+                    await self._buffer.put(chat_component)
+                diff_time = timeout - (time.time() - time_mark)
+                await asyncio.sleep(diff_time)
+                self._last_offset_ms = metadata.get('last_offset_ms', 0)
         except exceptions.ChatParseException as e:
             self._logger.debug(f"[{self._video_id}]{str(e)}")
             raise
@@ -218,12 +217,11 @@ class LiveChatAsync:
             '''
             self._pauser.put_nowait(None)
             if not self._is_replay:
-                async with self._client as client:
-                    channel_id = await util.get_channelid_async(client, self.video_id)
-                    continuation = liveparam.getparam(self._video_id, 
-                                    channel_id,
-                                    past_sec=3)
-                    
+                channel_id = await util.get_channelid_async(self._client, self.video_id)
+                continuation = liveparam.getparam(self._video_id, 
+                                channel_id,
+                                past_sec=3)
+                
         return continuation
 
     async def _get_contents(self, continuation, client, headers):
