@@ -123,9 +123,11 @@ def get_channelid_2nd(client, video_id):
         raise InvalidVideoIdException(f"Invalid video id: {video_id}")
     return ret
 
-def is_member_stream(client, video_id):
-    resp = client.get("https://m.youtube.com/embed/{}".format(quote(video_id)), headers=config.m_headers)  
-    match = "BADGE_STYLE_TYPE_MEMBERS_ONLY" in resp.text
+def is_member_stream(video_id):
+    match = None
+    with httpx.Client(http2=True) as client:
+        resp = client.get("https://m.youtube.com/embed/{}".format(quote(video_id)), headers=config.m_headers)  
+        match = "BADGE_STYLE_TYPE_MEMBERS_ONLY" in resp.text
     return match
 
 async def get_channelid_async(client, video_id):
