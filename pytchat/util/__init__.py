@@ -151,6 +151,6 @@ async def get_channelid_async_2nd(client, video_id):
     return ret
 
 async def async_is_member_stream(client, video_id):
-    resp = client.get("https://m.youtube.com/embed/{}".format(quote(video_id)), headers=config.m_headers)  
+    resp = await client.get("https://m.youtube.com/embed/{}".format(quote(video_id)), headers=config.m_headers)  
     match = "BADGE_STYLE_TYPE_MEMBERS_ONLY" in resp.text
     return match
