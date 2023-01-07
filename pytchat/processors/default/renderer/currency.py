@@ -38,4 +38,5 @@ symbols = {
     "SGD\xa0": {"fxtext": "SGD", "jptext": "シンガポール・ドル"},
     "\u20b1": {"fxtext": "PHP", "jptext": "フィリピン・ペソ"},
     "\u20aa": {"fxtext": "ILS", "jptext": "シェケル"},
+    "₫": {"fxtext": "VND", "jptext": "VND"}
 }
