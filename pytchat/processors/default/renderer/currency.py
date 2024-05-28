@@ -29,10 +29,14 @@ symbols = {
     "€": {"fxtext": "EUR", "jptext": "欧・ユーロ"},
     "₹": {"fxtext": "INR", "jptext": "インド・ルピー"},
     "￥": {"fxtext": "JPY", "jptext": "日本・円"},
+    "¥": {"fxtext": "JPY", "jptext": "日本・円"},
     "PEN\xa0": {"fxtext": "PEN", "jptext": "ペルー・ヌエボ・ソル"},
     "ARS\xa0": {"fxtext": "ARS", "jptext": "アルゼンチン・ペソ"},
     "CLP\xa0": {"fxtext": "CLP", "jptext": "チリ・ペソ"},
     "NOK\xa0": {"fxtext": "NOK", "jptext": "ノルウェー・クローネ"},
     "BAM\xa0": {"fxtext": "BAM", "jptext": "ボスニア・兌換マルカ"},
-    "SGD\xa0": {"fxtext": "SGD", "jptext": "シンガポール・ドル"}
+    "SGD\xa0": {"fxtext": "SGD", "jptext": "シンガポール・ドル"},
+    "\u20b1": {"fxtext": "PHP", "jptext": "フィリピン・ペソ"},
+    "\u20aa": {"fxtext": "ILS", "jptext": "シェケル"},
+    "₫": {"fxtext": "VND", "jptext": "VND"}
 }

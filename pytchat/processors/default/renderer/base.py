@@ -41,8 +41,14 @@ class BaseRenderer:
         )
         self.chat.author.channelId = self.item.get("authorExternalChannelId")
         self.chat.author.channelUrl = "http://www.youtube.com/channel/" + self.chat.author.channelId
-        self.chat.author.name = self.item["authorName"]["simpleText"]
-        self.chat.author.imageUrl = self.item["authorPhoto"]["thumbnails"][1]["url"]
+        if "authorName" in self.item.keys():
+            self.chat.author.name = self.item["authorName"]["simpleText"]
+        else:
+            self.chat.author.name = None
+        if "authorPhoto" in self.item.keys():
+            self.chat.author.imageUrl = self.item["authorPhoto"]["thumbnails"][1]["url"]
+        else:
+            self.chat.author.imageUrl = None
 
     def get_message(self, item):
         message = ''
